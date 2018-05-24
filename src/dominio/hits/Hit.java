@@ -29,4 +29,13 @@ public class Hit {
 		.sorted(Comparator.comparing(Cambio::getFechaRealizacion))
 		.forEach(cambio -> cambio.deshacer(unBag));
 	}
+
+	public void realizar(Bag unBag) {
+
+		cambios
+		.stream()
+		.forEach(cambio -> cambio.realizar(unBag));
+		
+		unBag.agregarHitAlHistorial(this);
+	}
 }

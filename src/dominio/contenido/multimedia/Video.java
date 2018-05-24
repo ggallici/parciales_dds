@@ -1,5 +1,5 @@
 package dominio.contenido.multimedia;
 
-public class Video {
+public class Video extends Multimedia {
 
 }

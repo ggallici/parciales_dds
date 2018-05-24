@@ -1,7 +1,6 @@
 package dominio.contenido.multimedia;
 
-import dominio.contenido.Contenido;
+public class Imagen extends Multimedia {
 
-public class Imagen implements Contenido {
-
+	
 }

@@ -1,6 +1,8 @@
 package dominio.contenido.multimedia;
 
-public class Multimedia {
+import dominio.contenido.Contenido;
+
+public class Multimedia extends Contenido {
 
 	private String titulo;
 	private String descripcion;

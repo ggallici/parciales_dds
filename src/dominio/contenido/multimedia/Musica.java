@@ -1,5 +1,5 @@
 package dominio.contenido.multimedia;
 
-public class Musica {
+public class Musica extends Multimedia {
 
 }

@@ -1,6 +1,7 @@
 package dominio;
 
 import dominio.hits.Hit;
+import dominio.hits.HitRequest;
 
 public class Usuario {
 
@@ -17,27 +18,32 @@ public class Usuario {
 		bag.eliminarColaborador(colaborador);
 	}
 	
-	public void realizarHit(Hit hit) {
+	public void realizarHit(Hit unHit) {
 		
-		bag.agregarHit(hit);
+		unHit.realizar(bag);
 	}
 	
-	public void realizarHitEn(Hit hit, Bag unBag) {
+	public void realizarHitEn(Hit unHit, Bag unBag) {
 		
-		if(!unBag.esColaborador(this))
+		unBag.validarColaborador(this);
 		
-			throw new NoEsColaboradorException();
-		
-		unBag.agregarHit(hit);
+		unHit.realizar(unBag);
 	}
 	
-	public void realizarHitRequestEn(Bag unBag) {
+	public void realizarHitRequestEn(HitRequest hitRequest, Bag unBag) {
 		
+		unBag.validarColaborador(this);
 		
+		unBag.agregarHitRequestPendiente(hitRequest);
 	}
 	
-	public void aprobarHitRequest() {
+	public void aprobarHitRequest(HitRequest hitRequest) {
 		
+		hitRequest.realizar(bag);
+	}
+	
+	public void deshacerLosUltimosNHits(int n) {
 		
+		bag.deshacerLosUltimosNHits(n);
 	}
 }

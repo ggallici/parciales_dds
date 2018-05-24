@@ -2,13 +2,16 @@ package dominio;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.stream.Stream;
 
 import dominio.contenido.Contenido;
 import dominio.hits.Hit;
+import dominio.hits.HitRequest;
 
-public class Bag implements Cloneable {
+public class Bag extends Contenido implements Cloneable {
 
-	private Collection<Hit> hits;
+	private Collection<Hit> historialDeHits;
+	private Collection<HitRequest> hitRequests;
 	private Collection<Contenido> contenidos;
 	private Collection<Usuario> colaboradores;
 	
@@ -29,11 +32,6 @@ public class Bag implements Cloneable {
 		contenidos.add(nuevo);
 	}
 	
-	public void referenciarContenido(Bag unBag) {
-		
-		//TODO 
-	}
-	
 	public Bag estadoEn(Hit unHit) throws CloneNotSupportedException {
 		
 		Bag bagVieja = (Bag) this.clone();
@@ -45,7 +43,7 @@ public class Bag implements Cloneable {
 
 	public void deshacerHitsHasta(Hit unHit) {
 		
-		hits
+		historialDeHits
 		.stream()
 		.sorted(Comparator.comparing(Hit::getFechaRealizacion))
 		.filter(hit -> hit.esAnteriorA(unHit))
@@ -62,13 +60,42 @@ public class Bag implements Cloneable {
 		colaboradores.remove(colaborador);
 	}
 
-	public void agregarHit(Hit hit) {
+	public void agregarHitAlHistorial(Hit hit) {
 
-		hits.add(hit);
+		historialDeHits.add(hit);
 	}
 
 	public boolean esColaborador(Usuario usuario) {
 		
 		return colaboradores.contains(usuario);
+	}
+
+	public void validarColaborador(Usuario usuario) {
+		
+		if(!esColaborador(usuario))
+		
+			throw new NoEsColaboradorException();
+	}
+
+	public void agregarHitRequestPendiente(HitRequest hitRequest) {
+
+		hitRequests.add(hitRequest);
+	}
+
+	public void deshacerLosUltimosNHits(int n) {
+
+		historialDeHits
+		.stream()
+		.sorted(Comparator.comparing(Hit::getFechaRealizacion))
+		.skip(n)
+		.forEach(hit -> hit.deshacer(this));		
+	}
+
+	@Override
+	public Stream<Contenido> getContenidoMultimedia() {
+		
+		return contenidos
+				.stream()
+				.flatMap(contenido -> contenido.getContenidoMultimedia());
 	}
 }

@@ -24,4 +24,14 @@ public class Votante {
 		
 		return criterioDeEleccion.aplicarCon(this, partidos);
 	}
+
+	public boolean estaEnContra(Promesa promesa) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public boolean estaAFavor(Promesa promesa) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

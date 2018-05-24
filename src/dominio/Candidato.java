@@ -1,6 +1,9 @@
 package dominio;
 
+import java.math.BigDecimal;
 import java.util.Collection;
+
+import dominio.criteriosOrdenPromesas.CriterioOrdenPromesas;
 
 public class Candidato {
 
@@ -23,5 +26,21 @@ public class Candidato {
 				.stream()
 				.filter(promesa -> promesa.contieneAlgunTopicoDe(unVotante.getTopicosDeInteres()))
 				.count();
+	}
+	
+	public void cumplirPromesasEnBaseA(BigDecimal unPresupuesto, CriterioOrdenPromesas criterio) {
+
+		BigDecimal acumulado = new BigDecimal(0);
+		
+		promesas
+		.stream()
+		.sorted(criterio)
+		.takeWhile(promesa -> acumulado.compareTo(unPresupuesto) <= 0)
+		.forEach(promesa -> {
+			
+			promesa.cumplir();
+			
+			acumulado.add(promesa.getCosto());
+		});
 	}
 }

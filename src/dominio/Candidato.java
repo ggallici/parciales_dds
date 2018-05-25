@@ -4,11 +4,14 @@ import java.math.BigDecimal;
 import java.util.Collection;
 
 import dominio.criteriosOrdenPromesas.CriterioOrdenPromesas;
+import dominio.interesadosEnPromesas.InteresadoEnPromesa;
 
 public class Candidato {
 
+	private Zona zona;
 	private Collection<Promesa> promesas;
 	private PartidoPolitico partido;
+	private Collection<InteresadoEnPromesa> interesados;
 	
 	public int cantidadPromesas() {
 		
@@ -35,12 +38,19 @@ public class Candidato {
 		promesas
 		.stream()
 		.sorted(criterio)
-		.takeWhile(promesa -> acumulado.compareTo(unPresupuesto) <= 0)
+		//.takeWhile(promesa -> acumulado.compareTo(unPresupuesto) <= 0)
 		.forEach(promesa -> {
 			
 			promesa.cumplir();
 			
 			acumulado.add(promesa.getCosto());
+			
+			interesados.forEach(interesado -> interesado.onPromesaCumplida(this, promesa));
 		});
+	}
+
+	public Zona getZona() {
+		
+		return zona;
 	}
 }

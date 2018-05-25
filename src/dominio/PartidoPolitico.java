@@ -1,12 +1,12 @@
 package dominio;
 
-import java.util.Map;
+import java.util.Collection;
 import java.util.stream.Stream;
 
 public class PartidoPolitico {
 
 	private Color color;
-	private Map<Zona, Candidato> candidatosPorZona;
+	private Collection<Candidato> candidatos;
 	
 	public Color getColor() {
 		
@@ -15,6 +15,6 @@ public class PartidoPolitico {
 
 	public Stream<Candidato> getCandidatos() {
 	
-		return candidatosPorZona.values().stream();
+		return candidatos.stream();
 	}
 }

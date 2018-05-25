@@ -3,12 +3,15 @@ package dominio;
 import java.util.Collection;
 
 import dominio.criteriosVotacion.CriterioVotacion;
+import dominio.interesadosEnPromesas.InteresadoEnPromesa;
+import dominio.interesadosEnPromesas.tiposElectores.TipoVotante;
 
-public class Votante {
+public class Votante implements InteresadoEnPromesa {
 
 	private Collection<Topico> topicosDeInteres;
 	private CriterioVotacion criterioDeEleccion;
 	private PartidoPolitico preferenciaFamiliar;
+	private TipoVotante tipo;
 	
 	public PartidoPolitico getPreferenciaFamiliar() {
 		
@@ -33,5 +36,20 @@ public class Votante {
 	public boolean estaAFavor(Promesa promesa) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void onPromesaCumplida(Candidato candidato, Promesa promesa) {
+
+		tipo.accionarAntePromesa(this, candidato, promesa);
+	}
+
+	public void setPreferenciaFamiliar(PartidoPolitico preferenciaFamiliar) {
+		this.preferenciaFamiliar = preferenciaFamiliar;
+	}
+
+	public Zona getZona() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

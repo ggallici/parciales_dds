@@ -200,10 +200,6 @@ public class Perfil {
         return genero;
     }
 
-    public void editarPerfil(Perfil perfil) {
-
-    }
-
     public void setEdad(Integer edad) {
         this.edad = edad;
     }
